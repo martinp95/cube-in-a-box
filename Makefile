@@ -5,7 +5,7 @@
 ## at 'http://localhost' with password 'secretpassword'
 .PHONY: help setup up down clean
 
-BBOX := 25,20,35,30
+BBOX := -10,41,-9,42
 
 help: ## Print this help
 	@grep -E '^##.*$$' $(MAKEFILE_LIST) | cut -c'4-'
