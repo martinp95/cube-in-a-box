@@ -1,4 +1,4 @@
--10,41,-9,42## You can follow the steps below in order to get yourself a local ODC.
+## You can follow the steps below in order to get yourself a local ODC.
 ## Start by running `setup` then you should have a system that is fully configured
 ##
 ## Once running, you can access a Jupyter environment
