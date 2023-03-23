@@ -2,7 +2,7 @@
 ## Start by running `setup` then you should have a system that is fully configured
 ##
 ## Once running, you can access a Jupyter environment
-## at 'http://localhost' with password 'secretpassword'
+## at 'http://localhost' with password 'secret'
 .PHONY: help setup up down clean
 
 BBOX := -9.5,36,1.5,43.8
