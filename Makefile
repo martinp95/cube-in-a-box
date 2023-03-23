@@ -5,7 +5,7 @@
 ## at 'http://localhost' with password 'secretpassword'
 .PHONY: help setup up down clean
 
-BBOX := -10,41,-9,42 #(min lon, min lat, max lon, max lat)
+BBOX := -7.204090,42.894504,-4.504988,43.680734 #(min lon, min lat, max lon, max lat)
 
 help: ## Print this help
 	@grep -E '^##.*$$' $(MAKEFILE_LIST) | cut -c'4-'
