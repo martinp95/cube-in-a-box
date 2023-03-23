@@ -28,4 +28,4 @@ WORKDIR /notebooks
 
 ENTRYPOINT ["/tini", "--"]
 
-CMD ["jupyter", "notebook", "--allow-root", "--ip='0.0.0.0'", "--NotebookApp.token='secretpassword'"]
+CMD ["jupyter", "notebook", "--allow-root", "--ip='0.0.0.0'", "--NotebookApp.token='secret'"]
