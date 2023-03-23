@@ -33,7 +33,7 @@ index: ## 4. Index some data (Change extents with BBOX='<left>,<bottom>,<right>,
 			--bbox='$(BBOX)' \
 			--catalog-href='https://earth-search.aws.element84.com/v0/' \
 			--collections='sentinel-s2-l2a-cogs' \
-			--datetime='2021-01-01/2022-01-31'"
+			--datetime='2022-01-01/2022-01-31'"
 	#docker-compose exec -T jupyter bash -c \
 	#	"stac-to-dc \
 	#		--catalog-href=https://planetarycomputer.microsoft.com/api/stac/v1/ \
