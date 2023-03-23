@@ -1,11 +1,11 @@
-## You can follow the steps below in order to get yourself a local ODC.
+-10,41,-9,42## You can follow the steps below in order to get yourself a local ODC.
 ## Start by running `setup` then you should have a system that is fully configured
 ##
 ## Once running, you can access a Jupyter environment
 ## at 'http://localhost' with password 'secretpassword'
 .PHONY: help setup up down clean
 
-BBOX := 42.894504,-7.204090,43.680734,-4.504988 #(min lon, min lat, max lon, max lat)
+BBOX := 43.14,-9,42.56,-5
 
 help: ## Print this help
 	@grep -E '^##.*$$' $(MAKEFILE_LIST) | cut -c'4-'
@@ -34,16 +34,6 @@ index: ## 4. Index some data (Change extents with BBOX='<left>,<bottom>,<right>,
 			--catalog-href='https://earth-search.aws.element84.com/v0/' \
 			--collections='sentinel-s2-l2a-cogs' \
 			--datetime='2022-01-01/2022-01-31'"
-	#docker-compose exec -T jupyter bash -c \
-	#	"stac-to-dc \
-	#		--catalog-href=https://planetarycomputer.microsoft.com/api/stac/v1/ \
-	#		--collections='io-lulc'" || true
-	# doesnt support multipoligon https://github.com/opendatacube/odc-tools/issues/538
-	#docker-compose exec -T jupyter bash -c \
-	#	"stac-to-dc \
-	#		--catalog-href='https://planetarycomputer.microsoft.com/api/stac/v1/' \
-	#		--collections='nasadem' \
-	#		--bbox='$(BBOX)'"
 
 down: ## Bring down the system
 	docker-compose down
