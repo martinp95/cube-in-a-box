@@ -21,8 +21,8 @@ ipyleaflet==0.14.0
 folium
 pandas==1.3.4
 numpy>=1.18
-xarray==0.16.0
-matplotlib==3.4.3
+xarray
+matplotlib
 geopandas
 scikit-image
 tqdm
