@@ -39,3 +39,7 @@ services:
       - CHECK_PORT=5432
     links:
       - postgres:postgres
+networks:
+ default:
+  external:
+   name: odcnet
