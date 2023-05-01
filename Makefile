@@ -39,6 +39,7 @@ down: ## Bring down the system
 	docker-compose down
 
 build: ## Rebuild the base image
+	docker network create odcnet
 	docker-compose pull
 	docker-compose build
 
@@ -46,6 +47,7 @@ shell: ## Start an interactive shell
 	docker-compose exec jupyter bash
 
 clean: ## Delete everything
+	docker network rm odcnet
 	docker-compose down --rmi all -v
 
 logs: ## Show the logs from the stack
