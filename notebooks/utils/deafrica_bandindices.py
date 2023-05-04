@@ -37,6 +37,8 @@ def calculate_indices(
 
         * ``'NDCI'`` (Normalised Difference Chlorophyll Index, Mishra & Mishra, 2012)
         * ``'NDVI'`` (Normalised Difference Vegetation Index, Rouse 1973)
+        * ``'IRECI'``(Inverted RedEdge Chlorophyll Index)
+        * ``'MTCI'``(# Inverted RedEdge Chlorophyll Index)
         
     satellite_mission : str
         An string that tells the function which satellite mission's data is
@@ -101,6 +103,10 @@ def calculate_indices(
         "NDVI": lambda ds: (ds.nir - ds.red) / (ds.nir + ds.red),
         # Normalised Difference Chlorophyll Index,(Mishra & Mishra, 2012)
         "NDCI": lambda ds: (ds.red_edge_1 - ds.red) / (ds.red_edge_1 + ds.red),
+        # Inverted RedEdge Chlorophyll Index
+        "IRECI": lambda ds: (ds.red_edge_3 - ds.red) * (ds.red_edge_2 / ds.red_edge_1),
+        # MERIS Terrestrial Chlorophyll Index
+        "MTCI": lambda ds: (ds.red_edge_2 - ds.red_edge_1) / (ds.red_edge_1 - ds.red),
     }
 
     def ndvi(ds):
