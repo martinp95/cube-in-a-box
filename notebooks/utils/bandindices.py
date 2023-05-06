@@ -38,7 +38,11 @@ def calculate_indices(
         * ``'NDCI'`` (Normalised Difference Chlorophyll Index, Mishra & Mishra, 2012)
         * ``'NDVI'`` (Normalised Difference Vegetation Index, Rouse 1973)
         * ``'IRECI'``(Inverted RedEdge Chlorophyll Index)
-        * ``'MTCI'``(# Inverted RedEdge Chlorophyll Index)
+        * ``'MTCI'`` (MERIS Terrestrial Chlorophyll Index)
+        * ``'OTCI'`` (OLCI Terrestrial Chlorophyll Index)
+        * ``'MCARI'`` (Modified Chlorophyll Absortion Ratio Index)
+        * ``'CI-RedEdge'`` (Chlorophyll Index Red Edge)
+        * ``'CI-GreenEdge'`` (Chlorophyll Index Green Edge)
         
     satellite_mission : str
         An string that tells the function which satellite mission's data is
@@ -107,10 +111,16 @@ def calculate_indices(
         "IRECI": lambda ds: (ds.red_edge_3 - ds.red) * (ds.red_edge_2 / ds.red_edge_1),
         # MERIS Terrestrial Chlorophyll Index
         "MTCI": lambda ds: (ds.red_edge_2 - ds.red_edge_1) / (ds.red_edge_1 - ds.red),
+        # OTCI OLCI Terrestrial Chlorophyll Index
+        # (Interpolamos las bandas 4 y 5 para poder tener la longitud de onda deseada
+        "OTCI": lambda ds: (ds.red_edge_2 - ds.red_edge_1) / (ds.red_edge_1 - (ds.red + ds.red_edge_1) / 2),
+        # MCARI Modified Chlorophyll Absortion Ratio Index
+        "MCARI": lambda ds: (ds.red_edge_1 - ds.red) - 0.2 * (ds.red_edge_1 - ds.green) / (ds.red_edge_1 / ds.red),
+        # CI-RedEdge Chlorophyll Index Red Edge
+        "CI_RedEdge": lambda ds: (ds.red_edge_3 / ds.red_edge_1) - 1,
+        # CI-GreenEdge Chlorophyll Index Green Edge
+        "CI_GreenEdge": lambda ds: (ds.red_edge_3 / ds.green) - 1,
     }
-
-    def ndvi(ds):
-        return (ds.nir - ds.red) / (ds.nir + ds.red)
 
     # If index supplied is not a list, convert to list. This allows us to
     # iterate through either multiple or single indices in the loop below
