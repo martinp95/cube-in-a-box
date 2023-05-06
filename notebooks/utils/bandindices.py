@@ -43,6 +43,8 @@ def calculate_indices(
         * ``'MCARI'`` (Modified Chlorophyll Absortion Ratio Index)
         * ``'CI-RedEdge'`` (Chlorophyll Index Red Edge)
         * ``'CI-GreenEdge'`` (Chlorophyll Index Green Edge)
+        * ``'TCARI'`` (Transformed Chlorophyll Absortion in Reflectance Index)
+        * ``'OSAVI'`` (Optimized Soil Adjust Vegetation Index)
         
     satellite_mission : str
         An string that tells the function which satellite mission's data is
@@ -121,6 +123,28 @@ def calculate_indices(
         # CI-GreenEdge Chlorophyll Index Green Edge
         "CI_GreenEdge": lambda ds: (ds.red_edge_3 / ds.green) - 1,
     }
+
+    # TCARI Transformed Chlorophyll Absortion in Reflectance Index
+    def TCARI(ds):
+        return 3 * (
+                (ds.red_edge_1 - ds.red)
+                - (0.2 * (ds.red_edge_1 - ds.green)
+                   / (ds.red_edge_1 / ds.red)))
+
+    index_dict["TCARI"] = TCARI
+
+    # OSAVI Optimized Soil Adjust Vegetation Index
+    def OSAVI(ds):
+        return 1.16 * ((ds.red_edge_3 - ds.red) / (ds.red_edge_3 + ds.red + 0.16))
+
+    index_dict["OSAVI"] = OSAVI
+
+    def TCARI_OSAVI(ds):
+        t = TCARI(ds)
+        o = OSAVI(ds)
+        return t / o
+
+    index_dict["TCARI_OSAVI"] = TCARI_OSAVI
 
     # If index supplied is not a list, convert to list. This allows us to
     # iterate through either multiple or single indices in the loop below
