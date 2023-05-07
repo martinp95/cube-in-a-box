@@ -21,3 +21,5 @@ data
 __pycache__
 
 notebooks/utils/.idea/
+
+notebooks/tools/.idea/
