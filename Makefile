@@ -5,7 +5,8 @@
 ## at 'http://localhost' with password 'secret'
 .PHONY: help setup up down clean
 
-BBOX := -9.5,36,1.5,43.8
+BBOX := 29.8,29.98,32.3,31.17
+INDEX_LIMIT := 1000
 
 help: ## Print this help
 	@grep -E '^##.*$$' $(MAKEFILE_LIST) | cut -c'4-'
@@ -40,6 +41,18 @@ index: ## 4. Index some data (Change extents with BBOX='<left>,<bottom>,<right>,
 			--catalog-href='https://earth-search.aws.element84.com/v0/' \
 			--collections='sentinel-s2-l2a-cogs' \
 			--datetime='2022-06-01/2022-12-31'"
+			
+	docker-compose exec -T jupyter stac-to-dc \
+		--catalog-href=https://explorer.digitalearth.africa/stac/ \
+		--collections=gm_s2_annual \
+		--bbox=$(BBOX) \
+		--limit=$(INDEX_LIMIT)
+		
+	docker-compose exec -T jupyter stac-to-dc \
+		--catalog-href=https://explorer.digitalearth.africa/stac/ \
+		--collections=gm_s2_semiannual \
+		--bbox=$(BBOX) \
+		--limit=$(INDEX_LIMIT)
 
 down: ## Bring down the system
 	docker-compose down
