@@ -20,7 +20,7 @@ import xarray as xr
 from dask_ml.wrappers import ParallelPostFit
 from datacube.utils import geometry
 from datacube.utils.geometry import assign_crs
-from deafrica_tools.spatial import xr_rasterize
+from tools.spatial import xr_rasterize
 from sklearn.base import ClusterMixin
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
@@ -192,13 +192,13 @@ def fit_xr(model, input_xr):
 
 
 def predict_xr(
-    model,
-    input_xr,
-    chunk_size=None,
-    persist=False,
-    proba=False,
-    clean=True,
-    return_input=False,
+        model,
+        input_xr,
+        chunk_size=None,
+        persist=False,
+        proba=False,
+        clean=True,
+        return_input=False,
 ):
     """
     Using dask-ml ParallelPostfit(), runs  the parallel
@@ -379,16 +379,17 @@ class HiddenPrints:
 
 
 def _get_training_data_for_shp(
-    gdf,
-    index,
-    row,
-    out_arrs,
-    out_vars,
-    dc_query,
-    return_coords,
-    feature_func=None,
-    field=None,
-    zonal_stats=None,
+        gdf,
+        index,
+        row,
+        out_arrs,
+        out_vars,
+        dc,
+        dc_query,
+        return_coords,
+        feature_func=None,
+        field=None,
+        zonal_stats=None,
 ):
     """
     This is the core function that is triggered by `collect_training_data`.
@@ -420,7 +421,7 @@ def _get_training_data_for_shp(
     # mulitprocessing for parallization
     if "dask_chunks" in dc_query.keys():
         dc_query.pop("dask_chunks", None)
-    
+
     # set up query based on polygon
     geom = geometry.Geometry(geom=gdf.iloc[index].geometry, crs=gdf.crs)
     q = {"geopolygon": geom}
@@ -429,7 +430,7 @@ def _get_training_data_for_shp(
     dc_query.update(q)
 
     # Use input feature function
-    data = feature_func(dc_query)
+    data = feature_func(dc, dc_query)
 
     # create polygon mask
     mask = xr_rasterize(gdf.iloc[[index]], data)
@@ -481,7 +482,7 @@ def _get_training_data_for_shp(
 
 
 def _get_training_data_parallel(
-    gdf, dc_query, ncpus, return_coords, feature_func=None, field=None, zonal_stats=None
+        gdf, dc_query, ncpus, return_coords, feature_func=None, field=None, zonal_stats=None
 ):
     """
     Function passing the '_get_training_data_for_shp' function
@@ -540,17 +541,18 @@ def _get_training_data_parallel(
 
 
 def collect_training_data(
-    gdf,
-    dc_query,
-    ncpus=1,
-    return_coords=False,
-    feature_func=None,
-    field=None,
-    zonal_stats=None,
-    clean=True,
-    fail_threshold=0.02,
-    fail_ratio=0.5,
-    max_retries=3,
+        gdf,
+        dc,
+        dc_query,
+        ncpus=1,
+        return_coords=False,
+        feature_func=None,
+        field=None,
+        zonal_stats=None,
+        clean=True,
+        fail_threshold=0.02,
+        fail_ratio=0.5,
+        max_retries=3,
 ):
     """
     This function provides methods for gathering training data from the ODC over 
@@ -565,6 +567,7 @@ def collect_training_data(
     ----------
     gdf : geopandas geodataframe
         geometry data in the form of a geopandas geodataframe
+    dc : datacube instance
     dc_query : dictionary
         Datacube query object, should not contain lat and long (x or y)
         variables as these are supplied by the 'gdf' variable
@@ -624,21 +627,21 @@ def collect_training_data(
     """
 
     # check the dtype of the class field
-    if gdf[field].dtype != np.int:
+    if gdf[field].dtype != int:
         raise ValueError(
             'The "field" column of the input vector must contain integer dtypes'
         )
 
     # set up some print statements
     if feature_func is None:
-         raise ValueError(
+        raise ValueError(
             "Please supply a feature layer function through the "
-            +"parameter 'feature_func'"
+            + "parameter 'feature_func'"
         )
 
     if zonal_stats is not None:
         print("Taking zonal statistic: " + zonal_stats)
-    
+
     # add unique id to gdf to help with indexing failed rows
     # during multiprocessing
     # if zonal_stats is not None:
@@ -663,6 +666,7 @@ def collect_training_data(
                 row,
                 results,
                 column_names,
+                dc,
                 dc_query,
                 return_coords,
                 feature_func,
@@ -886,12 +890,12 @@ class KMeans_tree(ClusterMixin):
 
 
 def spatial_clusters(
-    coordinates,
-    method="Hierarchical",
-    max_distance=None,
-    n_groups=None,
-    verbose=False,
-    **kwargs
+        coordinates,
+        method="Hierarchical",
+        max_distance=None,
+        n_groups=None,
+        verbose=False,
+        **kwargs
 ):
     """
     Create spatial groups on coorindate data using either KMeans clustering
@@ -960,17 +964,17 @@ def spatial_clusters(
 
 
 def SKCV(
-    coordinates,
-    n_splits,
-    cluster_method,
-    kfold_method,
-    test_size,
-    balance,
-    n_groups=None,
-    max_distance=None,
-    train_size=None,
-    random_state=None,
-    **kwargs
+        coordinates,
+        n_splits,
+        cluster_method,
+        kfold_method,
+        test_size,
+        balance,
+        n_groups=None,
+        max_distance=None,
+        train_size=None,
+        random_state=None,
+        **kwargs
 ):
     """
     Generate spatial k-fold cross validation indices using coordinate data.
@@ -1079,19 +1083,19 @@ def SKCV(
 
 
 def spatial_train_test_split(
-    X,
-    y,
-    coordinates,
-    cluster_method,
-    kfold_method,
-    balance,
-    test_size=None,
-    n_splits=None,
-    n_groups=None,
-    max_distance=None,
-    train_size=None,
-    random_state=None,
-    **kwargs
+        X,
+        y,
+        coordinates,
+        cluster_method,
+        kfold_method,
+        balance,
+        test_size=None,
+        n_splits=None,
+        n_groups=None,
+        max_distance=None,
+        train_size=None,
+        random_state=None,
+        **kwargs
 ):
     """
     Split arrays into random train and test subsets. Similar to
@@ -1284,12 +1288,12 @@ class _BaseSpatialCrossValidator(BaseCrossValidator, metaclass=ABCMeta):
     """
 
     def __init__(
-        self,
-        n_groups=None,
-        coordinates=None,
-        method=None,
-        max_distance=None,
-        n_splits=None,
+            self,
+            n_groups=None,
+            coordinates=None,
+            method=None,
+            max_distance=None,
+            n_splits=None,
     ):
 
         self.n_groups = n_groups
@@ -1437,17 +1441,17 @@ class _SpatialShuffleSplit(_BaseSpatialCrossValidator):
     """
 
     def __init__(
-        self,
-        n_groups=None,
-        coordinates=None,
-        method="Heirachical",
-        max_distance=None,
-        n_splits=None,
-        test_size=0.15,
-        train_size=None,
-        random_state=None,
-        balance=10,
-        **kwargs
+            self,
+            n_groups=None,
+            coordinates=None,
+            method="Heirachical",
+            max_distance=None,
+            n_splits=None,
+            test_size=0.15,
+            train_size=None,
+            random_state=None,
+            balance=10,
+            **kwargs
     ):
         super().__init__(
             n_groups=n_groups,
@@ -1583,18 +1587,18 @@ class _SpatialKFold(_BaseSpatialCrossValidator):
     """
 
     def __init__(
-        self,
-        n_groups=None,
-        coordinates=None,
-        method="Heirachical",
-        max_distance=None,
-        n_splits=5,
-        test_size=0.15,
-        train_size=None,
-        shuffle=True,
-        random_state=None,
-        balance=True,
-        **kwargs
+            self,
+            n_groups=None,
+            coordinates=None,
+            method="Heirachical",
+            max_distance=None,
+            n_splits=5,
+            test_size=0.15,
+            train_size=None,
+            shuffle=True,
+            random_state=None,
+            balance=True,
+            **kwargs
     ):
         super().__init__(
             n_groups=n_groups,

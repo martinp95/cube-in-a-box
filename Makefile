@@ -28,31 +28,28 @@ product: ## 3. Add a product definition for Sentinel-2
 
 
 index: ## 4. Index some data (Change extents with BBOX='<left>,<bottom>,<right>,<top>')
-	docker-compose exec -T jupyter bash -c \
-		"stac-to-dc \
-			--bbox='$(BBOX)' \
-			--catalog-href='https://earth-search.aws.element84.com/v0/' \
-			--collections='sentinel-s2-l2a-cogs' \
-			--datetime='2022-01-01/2022-06-01'"
-	
-	docker-compose exec -T jupyter bash -c \
-		"stac-to-dc \
-			--bbox='$(BBOX)' \
-			--catalog-href='https://earth-search.aws.element84.com/v0/' \
-			--collections='sentinel-s2-l2a-cogs' \
-			--datetime='2022-06-01/2022-12-31'"
+	docker-compose exec -T jupyter stac-to-dc \
+		--catalog-href=https://explorer.digitalearth.africa/stac/ \
+		--collections=s2_l2a \
+		--bbox=$(BBOX) \
+		--datetime=2022-01-01/2022-06-01
+
+
+	docker-compose exec -T jupyter stac-to-dc \
+		--catalog-href=https://explorer.digitalearth.africa/stac/ \
+		--collections=s2_l2a \
+		--bbox=$(BBOX) \
+		--datetime=2022-01-01/2022-06-01
 			
 	docker-compose exec -T jupyter stac-to-dc \
 		--catalog-href=https://explorer.digitalearth.africa/stac/ \
 		--collections=gm_s2_annual \
-		--bbox=$(BBOX) \
-		--limit=$(INDEX_LIMIT)
+		--bbox=$(BBOX)
 		
 	docker-compose exec -T jupyter stac-to-dc \
 		--catalog-href=https://explorer.digitalearth.africa/stac/ \
 		--collections=gm_s2_semiannual \
-		--bbox=$(BBOX) \
-		--limit=$(INDEX_LIMIT)
+		--bbox=$(BBOX)
 
 down: ## Bring down the system
 	docker-compose down

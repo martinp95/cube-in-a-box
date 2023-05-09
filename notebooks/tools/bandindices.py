@@ -4,7 +4,6 @@ Functions for computing remote sensing band indices
 
 # Import required packages
 import warnings
-import numpy as np
 
 
 # Define custom functions
