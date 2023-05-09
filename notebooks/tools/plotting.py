@@ -1,5 +1,5 @@
 """
-Functions for plotting Digital Earth Africa data.
+Functions for plotting Open Data Cube data.
 """
 
 # Import required packages
