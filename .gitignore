@@ -1,4 +1,3 @@
-data
 .ipynb_checkpoints/
 notebooks/.datacube.conf
 notebooks/.config/
@@ -17,7 +16,6 @@ notebooks/.local/
 notebooks/.bash_history
 notebooks/.python_history
 .env
-data
 __pycache__
 
 notebooks/utils/.idea/
