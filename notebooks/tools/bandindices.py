@@ -100,7 +100,6 @@ def calculate_indices(
     # Capture input band names in order to drop these if drop=True
     if drop:
         bands_to_drop = list(ds.data_vars)
-        print(f"Dropping bands {bands_to_drop}")
 
     # Dictionary containing remote sensing index band recipes
     index_dict = {
