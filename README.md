@@ -14,7 +14,7 @@ The Cube in a Box is a simple way to run the [Open Data Cube](https://www.openda
 * Note that after this step you will either need to logout/login, or run the next step with `sudo`
 
 **If you already have `make` , `docker` and `docker-compose` installed. For a custom bounding box append `BBOX=<left>,<bottom>,<right>,<top>` to the end of the command.**
-* `make setup` or `make setup-prod` (for speed)
+* `make setup`
 * Custom bounding box: `make setup BBOX=-2,37,15,47` or `make setup-prod BBOX=-2,37,15,47`
 
 **If you do not have `make` installed and would rather run the commands individually run the following:**
@@ -30,22 +30,4 @@ The Cube in a Box is a simple way to run the [Open Data Cube](https://www.openda
   * `docker-compose down`
 
 ### 2. Usage:
-View the Jupyter notebook `Sentinel_2.ipynb` at [http://localhost](http://localhost) using the password `secretpassword`. Note that you can index additional areas using the `Indexing_More_Data.ipynb` notebook.
-
-## Deploying to AWS
-
-To deploy to AWS, you can either do it on the command line, with the AWS command line installed or the magic URL below and the AWS console. Detailed instructions are [available](docs/Detailed_Install.md).
-
-Once deployed, if you navigate to the IP of the deployed instance, you can access Jupyter with the password you set in the parameters.json file or in the AWS UI if you used the magic URL.
-
-### Magic link
-
-[Launch a Cube in a Box](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=cube-in-a-box&templateURL=http://opendatacube-cube-in-a-box.s3.amazonaws.com/cube-in-a-box-cloudformation.yml)
-
-You need to be logged in to the AWS Console deploy using this URL. Once logged in, click the link, and follow the prompts including settings a bounding box region of interest, EC2 instance type and password for Jupyter.
-
-### Command line
-
-* Alter the parameters in the [parameters.json](./parameters.json) file
-* Run `make create-infra`
-* If you want to change the stack, you can do `make update-infra` (although it may be cleaner to delete and re-create the stack)
+View the Jupyter notebook `Sentinel_2.ipynb` at [http://localhost](http://localhost) using the password `secret`. Note that you can index additional areas using the `Indexing_More_Data.ipynb` notebook.
