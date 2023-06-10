@@ -1,5 +1,5 @@
 """
-Machine learning functions for classification of remote sensing data contained
+Functions for classification of remote sensing data contained
 in an Open Data Cube instance.
 """
 
