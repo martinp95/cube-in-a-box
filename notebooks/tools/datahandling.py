@@ -1,5 +1,5 @@
 """
-Functions for loading and handling Digital Earth Africa data.
+Functions for loading and handling data.
 """
 
 # Import required packages
