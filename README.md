@@ -7,7 +7,7 @@ The Cube in a Box is a simple way to run the [Open Data Cube](https://www.openda
 ### 1. Setup:
 
 **Checkout the Repo:**
-> `git clone https://github.com/opendatacube/cube-in-a-box.git` or `git clone git@github.com:opendatacube/cube-in-a-box.git`
+> `git clone https://github.com/martinp95/cube-in-a-box.git` or `git clone git@github.com:martinp95/cube-in-a-box.git`
 
 **First time users of Docker should run:**
 * `bash setup.sh` - This will get your system running and install everything you need.
