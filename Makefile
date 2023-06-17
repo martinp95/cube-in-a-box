@@ -38,7 +38,7 @@ index: ## 4. Index some data (Change extents with BBOX='<left>,<bottom>,<right>,
 		--catalog-href=https://explorer.digitalearth.africa/stac/ \
 		--collections=s2_l2a \
 		--bbox=$(BBOX) \
-		--datetime=2022-01-01/2022-06-01
+		--datetime=2022-06-01/2022-12-31
 			
 	docker-compose exec -T jupyter stac-to-dc \
 		--catalog-href=https://explorer.digitalearth.africa/stac/ \
