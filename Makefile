@@ -6,7 +6,6 @@
 .PHONY: help setup up down clean
 
 BBOX := 29.8,29.98,32.3,31.17
-INDEX_LIMIT := 1000
 
 help: ## Print this help
 	@grep -E '^##.*$$' $(MAKEFILE_LIST) | cut -c'4-'
