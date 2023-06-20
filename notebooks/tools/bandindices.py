@@ -21,8 +21,6 @@ def calculate_indices(
     a set of remote sensing indices, and adds the resulting array as a
     new variable in the original dataset.
 
-    Last modified: July 2022
-
     Parameters
     ----------
     ds : xarray Dataset
