@@ -109,7 +109,7 @@ def load_ard(
         * s2_l2a
     Sentinel-1:
         * s1_rtc
-    Last modified: Feb 2021
+
     Parameters
     ----------
     dc : datacube Datacube object
