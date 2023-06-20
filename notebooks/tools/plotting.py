@@ -244,8 +244,6 @@ def display_map(x, y, crs="EPSG:4326", margin=-0.5, zoom_bias=0):
     interactive map with a bounded rectangle overlayed on Google Maps
     imagery.
 
-    Last modified: September 2019
-
     Modified from function written by Otto Wagner available here:
     https://github.com/ceos-seo/data_cube_utilities/tree/master/data_cube_utilities
 
