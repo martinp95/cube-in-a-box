@@ -59,8 +59,6 @@ def rgb(
     This function was designed to work as an easier-to-use wrapper
     around xarray's `.plot.imshow()` functionality.
 
-    Last modified: April 2021
-
     Parameters
     ----------
     ds : xarray Dataset
