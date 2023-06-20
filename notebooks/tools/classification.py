@@ -21,8 +21,6 @@ def sklearn_flatten(input_xr):
     This flattening procedure enables DataArrays and Datasets to be used
     to train and predict with sklearn models.
 
-    Last modified: September 2019
-
     Parameters
     ----------
     input_xr : xarray.DataArray or xarray.Dataset
