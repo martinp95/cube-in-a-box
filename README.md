@@ -31,3 +31,6 @@ The Cube in a Box is a simple way to run the [Open Data Cube](https://www.openda
 
 ### 2. Usage:
 View the Jupyter notebook `Sentinel_2.ipynb` at [http://localhost](http://localhost) using the password `secret`. Note that you can index additional areas using the `Indexing_More_Data.ipynb` notebook.
+
+### 3. Demo:
+https://unioviedo-my.sharepoint.com/:v:/g/personal/uo236974_uniovi_es/EX3ojNUeHdBHp7LmbUTxoP4Bqz8FDTCKL4QBxs9Vr9ajEg?e=aDdR6k
